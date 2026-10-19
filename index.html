@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Events | College Event Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a href="#" class="brand">🎓 Campus<span>Events</span></a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#events">Events</a>
+    <a href="#manage">Manage Events</a>
+  </nav>
+  <button class="primary-btn" id="addEventNav">+ Add Event</button>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <span class="eyebrow">✨ YOUR CAMPUS, YOUR EXPERIENCE</span>
+    <h1>Make Every College<br><span>Moment Count.</span></h1>
+    <p>Discover exciting events, register in seconds, and make unforgettable campus memories.</p>
+    <a href="#events" class="hero-btn">Explore Events →</a>
+  </div>
+  <div class="hero-art">
+    <div class="art-circle">🎉</div>
+    <div class="floating-card">🎤 Cultural Fest</div>
+    <div class="floating-card second">💻 Tech Summit</div>
+    <div class="floating-card third">🏆 Sports Day</div>
+  </div>
+</section>
+
+<main class="container">
+  <section class="stats">
+    <div class="stat-card">
+      <div class="stat-icon purple">📅</div>
+      <div><p>Total Events</p><h2 id="totalEvents">0</h2></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon pink">👥</div>
+      <div><p>Total Registrations</p><h2 id="totalRegistrations">0</h2></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon orange">💺</div>
+      <div><p>Seats Available</p><h2 id="totalSeats">0</h2></div>
+    </div>
+  </section>
+
+  <section class="events-section" id="events">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">WHAT'S HAPPENING?</span>
+        <h2>Explore Events 🎊</h2>
+        <p>Find your next favorite campus experience.</p>
+      </div>
+    </div>
+
+    <div class="filters">
+      <input id="searchInput" type="search" placeholder="🔍 Search events...">
+      <select id="categoryFilter" aria-label="Filter by category">
+        <option value="All">All Categories</option>
+        <option value="Technology">💻 Technology</option>
+        <option value="Cultural">🎭 Cultural</option>
+        <option value="Sports">⚽ Sports</option>
+        <option value="Workshop">🧠 Workshop</option>
+        <option value="Other">✨ Other</option>
+      </select>
+      <select id="sortFilter" aria-label="Sort events">
+        <option value="date">Sort by date</option>
+        <option value="seats">Most seats available</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+
+    <div id="eventGrid" class="event-grid"></div>
+    <div id="emptyEvents" class="empty-state" hidden>
+      <div>🔎</div>
+      <h3>No events found</h3>
+      <p>Try another search or add a new event.</p>
+    </div>
+  </section>
+
+  <section class="manage-section" id="manage">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">EVENT ORGANIZER</span>
+        <h2>Manage Your Campus 📋</h2>
+        <p>Add events and download attendee records.</p>
+      </div>
+    </div>
+
+    <div class="management-panel">
+      <div>
+        <h3>➕ Create an Event</h3>
+        <p>Add your next campus activity to the event board.</p>
+      </div>
+      <button class="primary-btn" id="createEventBtn">Create Event</button>
+    </div>
+
+    <div class="attendees-panel">
+      <div class="attendee-heading">
+        <div>
+          <h3>👥 Attendee Directory</h3>
+          <p>Review student registrations for each event.</p>
+        </div>
+        <button class="outline-btn" id="exportBtn">⬇ Export CSV</button>
+      </div>
+
+      <div class="table-tools">
+        <select id="attendeeEventFilter" aria-label="Choose event for attendees"></select>
+        <input id="attendeeSearch" type="search" placeholder="Search students...">
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Student ID</th>
+              <th>Email</th>
+              <th>Registered On</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="attendeeTable"></tbody>
+        </table>
+      </div>
+      <p id="attendeeCount" class="table-footer">0 attendees</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="brand">🎓 Campus<span>Events</span></div>
+  <p>Bringing campus communities together 💜</p>
+  <small>College Event Management System · Student Project</small>
+</footer>
+
+<!-- Registration Modal -->
+<div class="modal" id="registrationModal" role="dialog"
+     aria-modal="true" aria-labelledby="registrationTitle" hidden>
+  <div class="modal-card">
+    <button class="close-btn" data-close="registrationModal" aria-label="Close">×</button>
+    <div class="modal-emoji">🎟️</div>
+    <h2 id="registrationTitle">Register for Event</h2>
+    <p id="registrationEventName" class="muted"></p>
+    <form id="registrationForm">
+      <input type="hidden" id="registrationEventId">
+      <label for="studentName">Full Name</label>
+      <input id="studentName" required maxlength="80" placeholder="Enter your name">
+      <label for="studentId">Student ID</label>
+      <input id="studentId" required maxlength="40" placeholder="e.g. 24CSE101">
+      <label for="studentEmail">College Email</label>
+      <input id="studentEmail" required type="email" maxlength="120"
+             placeholder="student@example.com">
+      <p id="registrationMessage" class="form-message" role="status"></p>
+      <button class="primary-btn full-btn" type="submit">Confirm Registration 🎉</button>
+    </form>
+  </div>
+</div>
+
+<!-- Add Event Modal -->
+<div class="modal" id="eventModal" role="dialog"
+     aria-modal="true" aria-labelledby="eventModalTitle" hidden>
+  <div class="modal-card">
+    <button class="close-btn" data-close="eventModal" aria-label="Close">×</button>
+    <div class="modal-emoji">✨</div>
+    <h2 id="eventModalTitle">Create a New Event</h2>
+    <p class="muted">Make your next campus event happen!</p>
+    <form id="eventForm">
+      <label for="eventName">Event Name</label>
+      <input id="eventName" required maxlength="100" placeholder="e.g. Annual Tech Fest">
+
+      <label for="eventCategory">Category</label>
+      <select id="eventCategory" required>
+        <option value="Technology">Technology</option>
+        <option value="Cultural">Cultural</option>
+        <option value="Sports">Sports</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="eventDate">Event Date</label>
+      <input id="eventDate" type="date" required>
+
+      <label for="eventVenue">Venue</label>
+      <input id="eventVenue" required maxlength="100" placeholder="e.g. Main Auditorium">
+
+      <label for="eventCapacity">Maximum Seats</label>
+      <input id="eventCapacity" type="number" min="1" max="10000"
+             required placeholder="e.g. 100">
+
+      <label for="eventDescription">Description</label>
+      <textarea id="eventDescription" required maxlength="300"
+                placeholder="Tell students what makes this event special..."></textarea>
+
+      <button class="primary-btn full-btn" type="submit">Publish Event 🚀</button>
+    </form>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
